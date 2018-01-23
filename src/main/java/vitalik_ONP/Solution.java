@@ -4,6 +4,8 @@ import javax.script.ScriptEngine;
 import javax.script.ScriptEngineManager;
 import javax.script.ScriptException;
 import javax.swing.*;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
 import java.util.ArrayList;
 
 /**
@@ -27,7 +29,21 @@ public class Solution {
 
             //sprawdzenie czy szereg nie jest pusty
             if (input == null) {
-                JOptionPane.showMessageDialog(null,"Program został stworzony przez Aliaksei Zayats");
+                final String link = "https://github.com/abrakadabra911/ONP";
+                JLabel label = new JLabel("<html>" +
+                        "This application was created by Aliaksei Zayats " +
+                        "<br/>email: aliaksei.zayats@gmail.com" +
+                        "<br/>All the source code you can find at: <u>"
+                        +link+"</u></html>",JLabel.CENTER);
+
+                label.addMouseListener(new MouseAdapter(){
+                    public void mousePressed(MouseEvent me){
+                        try{
+                            Runtime.getRuntime().exec("rundll32 url.dll,FileProtocolHandler "+link);
+                        }catch(Exception e){e.printStackTrace();}
+                    }
+                });
+                JOptionPane.showMessageDialog(null, label, "", JOptionPane.INFORMATION_MESSAGE);
                 System.exit(0);
             }
             String[] arrays = input.split(" ");

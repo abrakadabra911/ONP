@@ -59,8 +59,7 @@ public class Solution {
     //sprawdzenie czy nie było zbędnych spacji
     private static boolean hasEmptyMembers(String[] arrays) {
         for (String member : arrays) {
-            System.out.print(member);
-            if (member.isEmpty()) {
+            if (member.isEmpty()||member.equals(" ") ) {
                 return true;
             }
         }

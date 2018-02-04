@@ -1,34 +1,35 @@
 package vitalik_ONP;
 
-import javax.script.ScriptEngine;
-import javax.script.ScriptEngineManager;
-import javax.script.ScriptException;
+import javax.script.*;
 import javax.swing.*;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.util.ArrayList;
 
 /**
- * Created by leha on 2017-10-15.
+ * Created by Aliaksei Zayats on 2017-10-15.
+ * This program calculates ONP-row, please read in wikipedia:
+ * https://en.wikipedia.org/wiki/Reverse_Polish_notation
  */
+
 public class Solution {
     static private String inputString = "";
-    static private ScriptEngineManager mgr = new ScriptEngineManager();
-    static private ScriptEngine engine = mgr.getEngineByName("JavaScript");
+    static private ScriptEngineManager mgr = new ScriptEngineManager();               // Java 8 feature (Javascript engine)
+    static private ScriptEngine engine = mgr.getEngineByName("JavaScript"); // Java 8 feature (Javascript engine)
 
     private static void start() {
         try {
             inputString = JOptionPane.showInputDialog(null, "Proszę wprowadzić szereg ONP... (rozdzielić spacjami)");
 
-            //sprawdzenie czy szereg nie jest pusty
+            // sprawdzenie czy szereg nie jest pusty
             if (inputString.isEmpty()) repeat();
 
-            //rozbicie Stringu na szereg dzielony spacjami
+            // rozbicie Stringu na szereg dzielony spacjami
             String[] arrays = inputString.split(" ");
             ArrayList<String> stos = new ArrayList<>();
             double result = 0.;
 
-            //sprawdzenie czy w szeregu nie było podrząd więcej od 1 spacji
+            // sprawdzenie czy w szeregu nie było podrząd więcej od 1 spacji
             if (hasEmptyMembers(arrays)) repeat();
 
             result = calculateONP(arrays, stos);
@@ -46,7 +47,7 @@ public class Solution {
         }
     }
 
-    //sprawdzenie czy string jest liczbą
+    // sprawdzenie czy tekst jest liczbą
     private static boolean isNumeric(String str) {
         try {
             double d = Double.parseDouble(str);
@@ -56,10 +57,10 @@ public class Solution {
         return true;
     }
 
-    //sprawdzenie czy nie było zbędnych spacji
+    // sprawdzenie czy nie było zbędnych spacji
     private static boolean hasEmptyMembers(String[] arrays) {
         for (String member : arrays) {
-            if (member.isEmpty()||member.equals(" ") ) {
+            if (member.isEmpty() || member.equals(" ")) {
                 return true;
             }
         }
@@ -74,7 +75,7 @@ public class Solution {
                 stos.trimToSize();
             } else {
                 String foo = stos.get(stos.size() - 2) + member + stos.get(stos.size() - 1);
-                Double res = Double.parseDouble(engine.eval(foo).toString());
+                Double res = Double.parseDouble(engine.eval(foo).toString());       // Java 8 feature (Javascript engine)
 
                 // zdejmowanie ze stosu 2 elementów
                 stos.remove(stos.size() - 1);
@@ -88,7 +89,7 @@ public class Solution {
         return Double.parseDouble(stos.get(0));
     }
 
-    //ponowne uruchomienie
+    // ponowne uruchomienie
     private static void repeat() {
         JOptionPane.showMessageDialog(null, "Proszę wprowadzić poprawny szereg. Spróbuj ponownie");
         start();
